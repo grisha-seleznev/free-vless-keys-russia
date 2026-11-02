@@ -2,10 +2,8 @@ name: Update keys
 
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "0 */3 * * *"
   workflow_dispatch:
-  push:
-    paths: [sources.txt, update.py, README.template.md]
 
 permissions:
   contents: write
@@ -17,17 +15,72 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+        with:
+          path: public
+
+      - name: Checkout checker (private)
+        uses: actions/checkout@v4
+        with:
+          repository: megnar/vless-reality-checker
+          token: ${{ secrets.CHECKER_TOKEN }}
+          path: checker
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python update.py
+
+      - name: Week number (ASN DB refresh weekly)
+        id: week
+        run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache xray
+        uses: actions/cache@v4
+        with:
+          path: checker/bin
+          key: xray-${{ hashFiles('checker/get_xray.py') }}
+
+      - name: Cache ASN DB
+        uses: actions/cache@v4
+        with:
+          path: checker/data
+          key: asn-${{ steps.week.outputs.week }}
+
+      - name: Get xray
+        working-directory: checker
+        run: test -x bin/xray || python get_xray.py
+
+      - name: Check keys
+        working-directory: checker
+        run: python pipeline.py
+
+      - name: Publish
+        working-directory: checker
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
+        run: python publish.py --dest ../public
+
       - name: Commit
+        working-directory: public
         run: |
-          git config user.name "keys-bot"
+          git config user.name "Bounty VPN"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add keys.txt sub.txt README.md
+          git add -A
           git diff --cached --quiet && exit 0
           git commit -m "🔑 Обновление ключей $(TZ=Europe/Moscow date '+%d.%m.%Y %H:%M')"
           git push
+
+      - name: Alert on failure
+        if: failure()
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -s -o /dev/null "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${ADMIN_CHAT_ID}" \
+            --data-urlencode "text=⚠️ Bounty ключи: обновление упало, подписка не обновлена. ${RUN_URL}"
