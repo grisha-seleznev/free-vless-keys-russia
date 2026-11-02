@@ -4,7 +4,7 @@
 
 ### 🤖 Ключи прямо в Telegram: **[@vless_bounty_bot](https://t.me/vless_bounty_bot)** · 📢 Канал: **[@bounty_configs](https://t.me/bounty_configs)**
 
-**Ключей сейчас: 0** · **Обновлено: 02.11.2026 23:46 МСК**
+**Ключей сейчас: 0** · **Обновлено: 02.11.2026 23:51 МСК**
 
 </div>
 
@@ -19,10 +19,10 @@
 Скопируй ссылку и добавь в приложение как подписку (Subscription / «Добавить по URL»):
 
 ```
-https://raw.githubusercontent.com/OWNER/REPO/main/sub.txt
+https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/sub.txt
 ```
 
-**Вариант 2 — отдельные ключи.** Открой [keys.txt](https://raw.githubusercontent.com/OWNER/REPO/main/keys.txt), скопируй любой ключ `vless://...`
+**Вариант 2 — отдельные ключи.** Открой [keys.txt](https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/keys.txt), скопируй любой ключ `vless://...`
 и импортируй в приложение из буфера обмена.
 
 ## 📱 Приложения, которые можно скачать в России
