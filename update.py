@@ -97,7 +97,8 @@ def main() -> None:
 
     body = "\n".join(final) + ("\n" if final else "")
     old = open("keys.txt", encoding="utf-8").read() if os.path.exists("keys.txt") else None
-    if old == body and os.path.exists("README.md"):
+    readme_ok = os.path.exists("README.md") and f"/{REPO}/" in open("README.md", encoding="utf-8").read()
+    if old == body and readme_ok:
         print("Ключи не изменились")
         return
     open("keys.txt", "w", encoding="utf-8").write(body)
