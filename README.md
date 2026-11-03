@@ -1,29 +1,30 @@
 <div align="center">
 
-# 🔑 Бесплатные VLESS ключи для России — обновление каждые 2 часа
+# 🔑 Бесплатные VLESS ключи для России — Bounty VPN
 
-### 🤖 Ключи прямо в Telegram: **[@vless_bounty_bot](https://t.me/vless_bounty_bot)** · 📢 Канал: **[@bounty_configs](https://t.me/bounty_configs)**
+### 🤖 Ключи в Telegram: **[@vless_bounty_bot](https://t.me/vless_bounty_bot)** · 📢 Канал: **[@bounty_configs](https://t.me/bounty_configs)**
 
-**Ключей сейчас: 0** · **Обновлено: 02.11.2026 23:51 МСК**
+**Рабочих ключей: 176** · **Обновлено: 03.11.2026 10:14 МСК** · обновление каждые 3 часа
 
 </div>
 
 ---
 
-Бесплатные **VLESS / Reality** конфиги (v2ray, xray) для обхода блокировок в России.
-Список собирается автоматически каждые 2 часа — в него попадают только серверы, которые отвечают.
+Бесплатные **VLESS Reality** конфиги (v2ray / xray) для обхода блокировок в России.
+Каждые 3 часа список собирается заново, и каждый ключ проверяется **настоящим подключением**
+через xray — в подписку попадают только рабочие.
 
-## 🚀 Как подключиться
+## 🚀 Как подключиться — одна ссылка-подписка
 
-**Вариант 1 — подписка (рекомендуется, ключи обновляются сами).**
-Скопируй ссылку и добавь в приложение как подписку (Subscription / «Добавить по URL»):
+Скопируй ссылку и добавь в приложение как подписку («+» → «Добавить подписку» / «Импорт из буфера»).
+Ключи будут обновляться сами:
 
 ```
 https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/sub.txt
 ```
 
-**Вариант 2 — отдельные ключи.** Открой [keys.txt](https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/keys.txt), скопируй любой ключ `vless://...`
-и импортируй в приложение из буфера обмена.
+Если приложение не понимает эту ссылку — попробуй base64-вариант: `https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/sub_base64.txt`
+или открой [keys.txt](https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/keys.txt) и скопируй любой ключ `vless://...`.
 
 ## 📱 Приложения, которые можно скачать в России
 
@@ -35,11 +36,10 @@ https://raw.githubusercontent.com/grisha-seleznev/free-vless-keys-russia/main/su
 
 ## ⚠️ Важно
 
-Это ключи с **публичных серверов**: ими пользуется много людей, они могут быть медленными и пропадать.
-Не вводи через них пароли и банковские данные.
+Это ключи с **публичных серверов**: ими пользуется много людей, они бывают медленными и часто падают.
 
-**Нужен быстрый и стабильный личный VPN?** → **[@vless_bounty_bot](https://t.me/vless_bounty_bot)**
+### 🔥 Нужен VPN без отвалов и с высокой скоростью? → **[@mbountyvpn_bot](https://t.me/mbountyvpn_bot)**
 
 ---
 
-<sub>free vless keys russia · бесплатные vless ключи · v2ray configs · xray reality · обход блокировок · бесплатный vpn россия · vless подписка · конфиги v2ray</sub>
+<sub>free vless keys russia · бесплатные vless ключи · v2ray configs · xray reality · обход блокировок · бесплатный vpn россия · vless подписка · конфиги v2ray · bounty vpn</sub>
