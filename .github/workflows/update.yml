@@ -1,5 +1,8 @@
 name: Update keys
 
+# Каждые 3 часа: сбор + статический фильтр -> 3 независимые проверки xray на разных машинах (разные IP)
+# -> в подписку только ключи, прошедшие MIN_PASS проверок -> публикация.
+
 on:
   schedule:
     - cron: "0 */3 * * *"
@@ -12,58 +15,115 @@ concurrency:
   group: update-keys
   cancel-in-progress: false
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    steps:
-      - name: Checkout public repo
-        uses: actions/checkout@v4
-        with:
-          path: public
+env:
+  MIN_PASS: "3"   # сколько из 3 проверок должен пройти ключ
 
-      - name: Checkout checker (private)
-        uses: actions/checkout@v4
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      week: ${{ steps.week.outputs.week }}
+    steps:
+      - uses: actions/checkout@v4
         with:
           repository: megnar/vless-reality-checker
           ssh-key: ${{ secrets.CHECKER_SSH_KEY }}
           path: checker
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Week number (ASN DB refresh weekly)
-        id: week
+      - id: week
         run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache xray
-        uses: actions/cache@v4
-        with:
-          path: checker/bin
-          key: xray-${{ hashFiles('checker/get_xray.py') }}
-
-      - name: Cache ASN DB
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: checker/data
           key: asn-${{ steps.week.outputs.week }}
+      - name: Collect + static filter
+        working-directory: checker
+        run: python pipeline.py --no-xray
+      - uses: actions/upload-artifact@v4
+        with:
+          name: candidates
+          path: checker/out/
+          retention-days: 1
 
+  check:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        n: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: megnar/vless-reality-checker
+          ssh-key: ${{ secrets.CHECKER_SSH_KEY }}
+          path: checker
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: checker/bin
+          key: xray-${{ hashFiles('checker/get_xray.py') }}
+      - uses: actions/cache@v4
+        with:
+          path: checker/data
+          key: asn-${{ needs.prepare.outputs.week }}
+      - name: Runner IP
+        run: echo "Проверка ${{ matrix.n }} идёт с IP $(curl -s --max-time 10 https://api.ipify.org)"
+      - uses: actions/download-artifact@v4
+        with:
+          name: candidates
+          path: cand
       - name: Get xray
         working-directory: checker
         run: test -x bin/xray || python get_xray.py
-
-      - name: Check keys
+      - name: Check via xray
         working-directory: checker
-        run: python pipeline.py
+        run: python pipeline.py --input ../cand/result.txt --out ../out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.n }}
+          path: out/result.txt
+          retention-days: 1
 
+  publish:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: public
+      - uses: actions/checkout@v4
+        with:
+          repository: megnar/vless-reality-checker
+          ssh-key: ${{ secrets.CHECKER_SSH_KEY }}
+          path: checker
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: result-*
+          path: results
+      - uses: actions/download-artifact@v4
+        with:
+          name: candidates
+          path: cand
+      - name: Combine (MIN_PASS of 3)
+        run: |
+          python checker/combine.py --min-pass "$MIN_PASS" --out final results/result-*/result.txt
+          cp cand/checked.csv final/   # страна каждого ключа (для флагов)
       - name: Publish
-        working-directory: checker
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
-        run: python publish.py --dest ../public
-
+        run: python checker/publish.py --out final --dest public
       - name: Commit
         working-directory: public
         run: |
@@ -74,9 +134,12 @@ jobs:
           git commit -m "🔑 Обновление ключей $(TZ=Europe/Moscow date '+%d.%m.%Y %H:%M')"
           git push
 
-      - name: Alert on failure
-        if: failure()
-        env:
+  alert:
+    needs: [prepare, check, publish]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
