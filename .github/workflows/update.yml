@@ -119,6 +119,8 @@ jobs:
         run: |
           python checker/combine.py --min-pass "$MIN_PASS" --out final results/result-*/result.txt
           cp cand/checked.csv final/   # страна каждого ключа (для флагов)
+          # для 4-й проверки с сервера (server_check.py забирает отсюда)
+          mkdir -p public/stage && cp final/result.txt final/checked.csv public/stage/
       - name: Publish
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
