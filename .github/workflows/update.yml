@@ -1,11 +1,12 @@
-name: Update keys
+name: Post-check keys
 
-# Каждые 3 часа: сбор + статический фильтр -> 3 независимые проверки xray на разных машинах (разные IP)
-# -> в подписку только ключи, прошедшие MIN_PASS проверок -> публикация.
+# Срабатывает, когда NL-сервер публикует свежий список из РФ (stage/result.txt).
+# Проверяет ключи через xray и убирает из подписок умершие.
 
 on:
-  schedule:
-    - cron: "0 */3 * * *"
+  push:
+    branches: [main]
+    paths: ["stage/result.txt"]
   workflow_dispatch:
 
 permissions:
@@ -15,86 +16,10 @@ concurrency:
   group: update-keys
   cancel-in-progress: false
 
-env:
-  MIN_PASS: "3"   # сколько из 3 проверок должен пройти ключ
-
 jobs:
-  prepare:
+  post-check:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    outputs:
-      week: ${{ steps.week.outputs.week }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: megnar/vless-reality-checker
-          ssh-key: ${{ secrets.CHECKER_SSH_KEY }}
-          path: checker
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - id: week
-        run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4
-        with:
-          path: checker/data
-          key: asn-${{ steps.week.outputs.week }}
-      - name: Collect + static filter
-        working-directory: checker
-        run: python pipeline.py --no-xray
-      - uses: actions/upload-artifact@v4
-        with:
-          name: candidates
-          path: checker/out/
-          retention-days: 1
-
-  check:
-    needs: prepare
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        n: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: megnar/vless-reality-checker
-          ssh-key: ${{ secrets.CHECKER_SSH_KEY }}
-          path: checker
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - uses: actions/cache@v4
-        with:
-          path: checker/bin
-          key: xray-${{ hashFiles('checker/get_xray.py') }}
-      - uses: actions/cache@v4
-        with:
-          path: checker/data
-          key: asn-${{ needs.prepare.outputs.week }}
-      - name: Runner IP
-        run: echo "Проверка ${{ matrix.n }} идёт с IP $(curl -s --max-time 10 https://api.ipify.org)"
-      - uses: actions/download-artifact@v4
-        with:
-          name: candidates
-          path: cand
-      - name: Get xray
-        working-directory: checker
-        run: test -x bin/xray || python get_xray.py
-      - name: Check via xray
-        working-directory: checker
-        run: python pipeline.py --input ../cand/result.txt --out ../out
-      - uses: actions/upload-artifact@v4
-        with:
-          name: result-${{ matrix.n }}
-          path: out/result.txt
-          retention-days: 1
-
-  publish:
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -107,25 +32,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/download-artifact@v4
+      - uses: actions/cache@v4
         with:
-          pattern: result-*
-          path: results
-      - uses: actions/download-artifact@v4
-        with:
-          name: candidates
-          path: cand
-      - name: Combine (MIN_PASS of 3)
-        run: |
-          python checker/combine.py --min-pass "$MIN_PASS" --out final results/result-*/result.txt
-          cp cand/checked.csv final/   # страна каждого ключа (для флагов)
-          # для 4-й проверки с сервера (server_check.py забирает отсюда)
-          mkdir -p public/stage && cp final/result.txt final/checked.csv public/stage/
-      - name: Publish
+          path: checker/bin
+          key: xray-${{ hashFiles('checker/get_xray.py') }}
+      - name: Get xray
+        working-directory: checker
+        run: test -x bin/xray || python get_xray.py
+      - name: Post-check
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
-        run: python checker/publish.py --out final --dest public
+        working-directory: checker
+        run: python post_check.py --public ../public
       - name: Commit
         working-directory: public
         run: |
@@ -133,19 +52,15 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && exit 0
-          git commit -m "🔑 Обновление ключей $(TZ=Europe/Moscow date '+%d.%m.%Y %H:%M')"
+          git commit -m "✅ Постпроверка: убраны умершие ключи ($(TZ=Europe/Moscow date '+%d.%m.%Y %H:%M') МСК)"
           git push
-
-  alert:
-    needs: [prepare, check, publish]
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - env:
+      - name: Alert
+        if: failure()
+        env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           curl -s -o /dev/null "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${ADMIN_CHAT_ID}" \
-            --data-urlencode "text=⚠️ Bounty ключи: обновление упало, подписка не обновлена. ${RUN_URL}"
+            --data-urlencode "text=⚠️ Bounty ключи: постпроверка упала. ${RUN_URL}"
