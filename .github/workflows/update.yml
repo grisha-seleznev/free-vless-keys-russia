@@ -39,8 +39,11 @@ jobs:
       - name: Get xray
         working-directory: checker
         run: test -x bin/xray || python get_xray.py
+      - name: Configure hourly subscriptions
+        run: sed -i "s/UPDATE_HOURS = 3/UPDATE_HOURS = 1/" checker/publish.py
       - name: Post-check
         env:
+          TG_KEYS: "7"
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
         working-directory: checker
