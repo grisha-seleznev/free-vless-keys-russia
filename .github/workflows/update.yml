@@ -40,7 +40,9 @@ jobs:
         working-directory: checker
         run: test -x bin/xray || python get_xray.py
       - name: Configure hourly subscriptions
-        run: sed -i "s/UPDATE_HOURS = 3/UPDATE_HOURS = 1/" checker/publish.py
+        run: |
+          sed -i "s/UPDATE_HOURS = 3/UPDATE_HOURS = 1/" checker/publish.py
+          python -c 'from pathlib import Path; p=Path("checker/post_check.py"); s=p.read_text(); assert "max(5, len(recs) // 2)" in s; p.write_text(s.replace("max(5, len(recs) // 2)", "max(7, len(recs) // 2)"))'
       - name: Post-check
         env:
           TG_KEYS: "7"
