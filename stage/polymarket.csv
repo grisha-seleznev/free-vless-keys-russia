@@ -1,5 +1,6 @@
 uri,cc
-vless://7af8ad56-33ce-4f3d-ad15-ef32a71d67f7@66.90.106.210:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2okfB1oMV1oQX1QZLbd_gQx4ZGtIDkP8KkELglZIBys&security=reality&sid=accded3297&sni=dash.syn2.online&type=tcp,AT
+vless://4618cebd-e1e9-45c3-be98-d9d6e3ee8bef@136.148.213.149:443?security=reality&sni=362c1eg.se1.h1clayd.click&type=grpc&fp=edge&pbk=BLhS7fE4Yh6kAADw7yRIn2PzKun-JDagJHJNOePYRSY&sid=bee802ae4ab66496,SE
 vless://2dfbcaf9-89fc-4fa2-9b41-962d8cb77aaf@362c1eg.se2.h1clayd.click:443?security=reality&encryption=none&pbk=BLhS7fE4Yh6kAADw7yRIn2PzKun-JDagJHJNOePYRSY&fp=chrome&spx=/&type=grpc&sni=362c1eg.se2.h1clayd.click&sid=bee802ae4ab66496,SE
 vless://2208b003-78b1-453c-b5ca-ce847ff0efd6@d4a338t.pl8.h1clayd.click:443?type=tcp&security=reality&flow=xtls-rprx-vision&fp=firefox&pbk=0dAUffCns_r-xP3QP1V8qy2P29vBN5ROOoX96TxpvXA&sid=b545243c33282b73&sni=d4a338t.pl8.h1clayd.click&encryption=none,EE
+vless://7af8ad56-33ce-4f3d-ad15-ef32a71d67f7@66.90.106.210:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=2okfB1oMV1oQX1QZLbd_gQx4ZGtIDkP8KkELglZIBys&security=reality&sid=accded3297&sni=dash.syn2.online&type=tcp,AT
 vless://dadf78d3-5cc9-453f-a3e6-2f0826a59c68@217.60.148.152:443/?type=tcp&encryption=none&flow=xtls-rprx-vision&sni=in.static-s3.org&fp=chrome&security=reality&pbk=drhDo_VnUaM05YqwqE03ISx_8ZG8FlNGpSMCnAeqvFk&sid=159246753f750720,IN
