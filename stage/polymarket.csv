@@ -1,5 +1,5 @@
 uri,cc
-vless://65b6bc06-44c9-4b21-8dc0-bdf1d688c0e6@ch.mntw.lol:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=ch.mntw.lol&pbk=dqhYuWM5WUOgUYe4FmvLZS-Nb4tY9qZ7_WffpePl6lQ&sid=76d0389e457fcba0&fp=firefox,CH
-vless://42c83523-9f96-41b2-82d6-2edb71a4ac19@147.45.213.56:443?&security=reality&flow=xtls-rprx-vision&pbk=fJnm6-PhJGSwHaAdJOzXkYOfCPPCWSlaZrtfm1XsqhA&fp=firefox&sni=zkgbzlv5d42.vortenix-data59.cfd&type=tcp&headerType=none&host=zkgbzlv5d42.vortenix-data59.cfd&path=%2F,TR
-vless://7d63243c-983e-44db-a1b8-13dc3fd6f7a2@swe1.baterium.space:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=cdnjs.com&fp=qq&pbk=mg2MoLpb8B51aZiko_nW2SBRoaudv-O6HLHx8VYP7Do&type=tcp&headerType=none,FI
 vless://7d63243c-983e-44db-a1b8-13dc3fd6f7a2@31.77.158.172:443?security=reality&flow=xtls-rprx-vision&sni=cdnjs.com&type=tcp&fp=qq&pbk=mg2MoLpb8B51aZiko_nW2SBRoaudv-O6HLHx8VYP7Do,FI
+vless://65b6bc06-44c9-4b21-8dc0-bdf1d688c0e6@ch.mntw.lol:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=ch.mntw.lol&pbk=dqhYuWM5WUOgUYe4FmvLZS-Nb4tY9qZ7_WffpePl6lQ&sid=76d0389e457fcba0&fp=firefox,CH
+vless://42c83523-9f96-41b2-82d6-2edb71a4ac19@201.34.136.78:443?&security=reality&flow=xtls-rprx-vision&pbk=fJnm6-PhJGSwHaAdJOzXkYOfCPPCWSlaZrtfm1XsqhA&fp=firefox&sni=fjn2vd4dgxb6.dynarix-node41.sbs&type=tcp&headerType=none&host=fjn2vd4dgxb6.dynarix-node41.sbs&path=%2F,KZ
+vless://7d63243c-983e-44db-a1b8-13dc3fd6f7a2@swe1.baterium.space:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=cdnjs.com&fp=qq&pbk=mg2MoLpb8B51aZiko_nW2SBRoaudv-O6HLHx8VYP7Do&type=tcp&headerType=none,FI
