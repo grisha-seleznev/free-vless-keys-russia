@@ -1,6 +1,5 @@
 uri,cc
-vless://b1ea01b5-2902-4ff6-a64d-fafd20aea9f1@trn19.mobileemdad.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=delivery.mp.microsoft.com&fp=firefox&pbk=PjR-SM4fOm2fY4mTqWoqZDRyxontvpailM0gBqUxlUQ&sid=08&type=tcp&headerType=none,TR
 vless://2ccb06b6-9eac-44eb-ade7-c1e5afb8e7df@468bc3g.fi16.h1clayd.click:443?type=grpc&security=reality&serviceName=973a13acd723&sni=468bc3g.fi16.h1clayd.click&fp=ios&pbk=ITvHZlJwSY3tsZEN3uTmOGj5hUWk-uazUBh7ZGBy33o&sid=d50d9c31ff34ebc7&spx=%2F&encryption=none,FI
 vless://2ccb06b6-9eac-44eb-ade7-c1e5afb8e7df@78ec29x.fi16.h1clayd.click:443?type=xhttp&security=reality&path=%2Fabaa3e5039a8&mode=auto&sni=78ec29x.fi16.h1clayd.click&fp=firefox&pbk=yDvxKBE3JdXsnptGoLiUwQAnf_xw1DVWD9NcyphwRn4&sid=b81a22dc3a846efd&spx=%2F&encryption=none,FI
-vless://73ebb72a-e2a8-44c8-a0e3-938740a4f578@314fbcg.ee5.h1clayd.shop:443?security=reality&type=grpc&mode=gun&serviceName=9e16c22000f6&packetEncoding=xudp&sni=314fbcg.ee5.h1clayd.shop&fp=firefox&sid=55c396924697994f&pbk=wQ0i9JDLOmAnh1Xfo-n_QqSu1hyuqHtTcy--DGgqtzA&encryption=none,EE
 vless://2ccb06b6-9eac-44eb-ade7-c1e5afb8e7df@a80b5386.fi16.h1clayd.click:443?type=tcp&security=reality&sni=a80b5386.fi16.h1clayd.click&fp=firefox&pbk=PslSaSQWP4BZZmkL7irab4FMti8sW6BvoC7ytFjJFyc&sid=cc678f10161992a9&spx=%2F&encryption=none,FI
+vless://2ccb06b6-9eac-44eb-ade7-c1e5afb8e7df@f0f0bet.fi16.h1clayd.click:443?type=tcp&security=reality&sni=f0f0bet.fi16.h1clayd.click&fp=chrome&pbk=GR2jS6u-CicgvYj-mnyfVpbYzkXw-WiXHr6hhqmir38&sid=795c3f4f29745c96&spx=%2F&encryption=none,FI
