@@ -1,4 +1,3 @@
 #profile-title: base64:Qm91bnR5IFZQTiBQb2x5bWFya2V0
 #profile-update-interval: 1
 vless://9df9ee1a-0671-4c6c-93c7-65598fb946f7@103.88.241.220:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=ruhongmicro2.gangplatform.com&fp=qq&pbk=u9GnN8KGzfV0xQj6R8Ydp1nvY4exEWlTIcIbA27N0Wo&sid=bad10ef561d2e2a1&type=tcp&headerType=none&host=ruhongmicro2.gangplatform.com#%F0%9F%94%91%20001%20%F0%9F%87%AD%F0%9F%87%B0%20Polymarket%20%7C%20%40vless_bounty_bot
-vless://9f749472-c636-4c5a-af51-7f8feefaac81@r.dhafhdtjdti.site:443?security=reality&encryption=none&pbk=yMYWijK43WMI0voEhf7EEPvZCjo0vtCPoQibqqPlGn4&headerType=none&fp=chrome&spx=%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN%2F%40SHADOW_VPN&type=tcp&flow=xtls-rprx-vision&sni=www.samsung.com&sid=7c4e91ab#%F0%9F%94%91%20002%20%F0%9F%87%B8%F0%9F%87%AA%20Polymarket%20%7C%20%40vless_bounty_bot
