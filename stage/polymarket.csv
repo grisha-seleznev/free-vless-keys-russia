@@ -1,4 +1,4 @@
 uri,cc
+vless://639b131f-d0f3-460c-aa17-423047f8a5df@213.21.252.56:443?encryption=none&flow=xtls-rprx-vision&fp=firefox&pbk=-P8DgKISSG4jnLuj6ihZDqZs1_zt-juBrhVhTylHiAo&security=reality&sni=stock2.mcufa.pro&type=tcp,FI
+vless://639b131f-d0f3-460c-aa17-423047f8a5df@213.21.252.56:443?encryption=none&flow=xtls-rprx-vision&type=tcp&security=reality&sni=stock2.mcufa.pro&pbk=-P8DgKISSG4jnLuj6ihZDqZs1_zt-juBrhVhTylHiAo&fp=firefox,FI
 vless://f4b08bf1-d9bd-4755-aa88-ba922282c608@92.63.193.41:443?flow=xtls-rprx-vision&security=reality&sni=ruswedmicro2.gangplatform.com&fp=qq&pbk=Hk7E17R41exzrPKAOeETobKQ0LOAmuLSzFXdEwLSmiQ&sid=b92d7008f05da71e,SE
-"vless://639b131f-d0f3-460c-aa17-423047f8a5df@147.45.45.194:443?Telegram=@GozargahAzad,@GozargahAzad,@GozargahAzad,@GozargahAzad,@GozargahAzad,@GozargahAzad,@GozargahAzad&security=reality&encryption=none&pbk=-P8DgKISSG4jnLuj6ihZDqZs1_zt-juBrhVhTylHiAo&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=finb2.mcufa.pro",FI
-vless://2ccb06b6-9eac-44eb-ade7-c1e5afb8e7df@468bc3g.fi16.h1clayd.click:443?type=grpc&security=reality&fp=ios&pbk=ITvHZlJwSY3tsZEN3uTmOGj5hUWk-uazUBh7ZGBy33o&sid=d50d9c31ff34ebc7&sni=468bc3g.fi16.h1clayd.click&serviceName=973a13acd723&spx=%2F,FI
